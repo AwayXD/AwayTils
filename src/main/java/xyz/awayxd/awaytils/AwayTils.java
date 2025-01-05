@@ -6,7 +6,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import xyz.awayxd.awaytils.mods.AutoPlay;
-import xyz.awayxd.awaytils.mods.AutoSprint;
 import xyz.awayxd.awaytils.mods.KillSults;
 import xyz.awayxd.awaytils.mods.SkywarsCounter;
 
@@ -21,7 +20,6 @@ public class AwayTils
         MinecraftForge.EVENT_BUS.register(new AutoPlay());
         MinecraftForge.EVENT_BUS.register(new KillSults());
         MinecraftForge.EVENT_BUS.register(new SkywarsCounter());
-        MinecraftForge.EVENT_BUS.register(new AutoSprint());
 
 
 
