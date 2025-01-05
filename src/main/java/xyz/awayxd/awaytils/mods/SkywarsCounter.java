@@ -12,8 +12,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import xyz.awayxd.awaytils.commands.ModManager;
 
-public class SkywarsCounter {
+public class SkywarsCounter implements ModManager.ModLifecycle {
 
 private final Minecraft mc = Minecraft.getMinecraft();
 private int countdown = -1;
@@ -74,5 +75,15 @@ private void drawCountdownText() {
     int y = screenHeight - 15;
     mc.fontRendererObj.drawString(timerText, x, y, 0xFFFFFF, true);
 }
+
+    @Override
+    public void onEnable() {
+        MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    @Override
+    public void onDisable() {
+        MinecraftForge.EVENT_BUS.unregister(this);
+    }
 }
 

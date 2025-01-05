@@ -4,10 +4,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import xyz.awayxd.awaytils.commands.ModManager;
+
 import java.util.Random;
 
-public class KillSults {
+public class KillSults implements ModManager.ModLifecycle {
     private Minecraft mc = Minecraft.getMinecraft();
     private Random rand = new Random();
 
@@ -106,4 +109,15 @@ public class KillSults {
             mc.thePlayer.sendChatMessage(insult);
         }
     }
+
+    @Override
+    public void onEnable() {
+        MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    @Override
+    public void onDisable() {
+        MinecraftForge.EVENT_BUS.unregister(this);
+    }
 }
+
