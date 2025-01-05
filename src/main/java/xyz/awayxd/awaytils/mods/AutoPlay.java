@@ -54,7 +54,7 @@ public class AutoPlay implements ModManager.ModLifecycle {
             int width = scaledResolution.getScaledWidth();
             int height = scaledResolution.getScaledHeight();
             String text = EnumChatFormatting.DARK_GRAY + "AutoPlay : " + EnumChatFormatting.WHITE + countdown;
-            int yOffset = height / 2 + 10;
+            int yOffset = height / 2 + 35;
             mc.fontRendererObj.drawStringWithShadow(text, width / 2 - mc.fontRendererObj.getStringWidth(text) / 2, yOffset, 0xFFFFFF);
 
         } else if (countdown == 0) {
