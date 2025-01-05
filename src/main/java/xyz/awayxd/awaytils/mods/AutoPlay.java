@@ -35,6 +35,7 @@ public class AutoPlay implements ModManager.ModLifecycle {
             String cleanMessage = message.getUnformattedText().replaceAll("§.", "");
             if (cleanMessage.toLowerCase().contains("you won! want to play again? click here!") ||
                     cleanMessage.toLowerCase().contains("you died! want to play again? click here!")) {
+
                 countdown = 3;
                 lastTime = System.currentTimeMillis();
             }
