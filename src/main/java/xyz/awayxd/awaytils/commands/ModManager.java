@@ -1,6 +1,11 @@
 package xyz.awayxd.awaytils.commands;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.client.Minecraft;
@@ -10,12 +15,6 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.common.config.Configuration;
 import xyz.awayxd.awaytils.mods.*;
 
 public class ModManager {
@@ -23,7 +22,7 @@ public class ModManager {
     private static final Minecraft mc = Minecraft.getMinecraft();
     private static final Map<String, Boolean> modStates = new HashMap<>();
     private static final Map<String, Object> modules = new HashMap<>();
-    private static Configuration config;
+    private static File configFile;
 
     static {
         modStates.put("AutoPlay", false);
@@ -35,38 +34,75 @@ public class ModManager {
     }
 
     public static void initialize() {
-        File configFile = new File(mc.mcDataDir, "config/awaytils.cfg");
-        config = new Configuration(configFile);
+        File configDir = new File(mc.mcDataDir, "config/awaytils_config");
+        if (!configDir.exists()) {
+            if (configDir.mkdirs()) {
+                System.out.println("Created config directory at: " + configDir.getAbsolutePath());
+            } else {
+                System.out.println("Failed to create config directory at: " + configDir.getAbsolutePath());
+            }
+        } else {
+            System.out.println("Config directory already exists at: " + configDir.getAbsolutePath());
+        }
+
+        configFile = new File(configDir, "awaytils_settings.txt");
+        System.out.println("Config file path: " + configFile.getAbsolutePath());
+
+        if (!configFile.exists()) {
+            try {
+                if (configFile.createNewFile()) {
+                    System.out.println("Created config file at: " + configFile.getAbsolutePath());
+                } else {
+                    System.out.println("Config file already exists at: " + configFile.getAbsolutePath());
+                }
+            } catch (IOException e) {
+                System.out.println("Failed to create config file at: " + configFile.getAbsolutePath());
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Config file already exists at: " + configFile.getAbsolutePath());
+        }
+
         loadConfig();
-        ClientCommandHandler.instance.registerCommand(new UtilsCommand());
-        MinecraftForge.EVENT_BUS.register(new ModManager());
     }
 
     public static void loadConfig() {
-        try {
-            config.load();
-            modStates.put("AutoPlay", config.get("modSettings", "AutoPlay", false).getBoolean());
-            modStates.put("SkywarsCounter", config.get("modSettings", "SkywarsCounter", false).getBoolean());
-            modStates.put("KillSults", config.get("modSettings", "KillSults", false).getBoolean());
-        } catch (Exception e) {
-            System.out.println("Failed to load config file.");
-        } finally {
-            if (config.hasChanged()) {
-                config.save();
+        if (configFile == null || !configFile.exists()) {
+            return;  // No config file, use default values
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(configFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) continue;
+
+                String[] parts = line.split("=");
+                if (parts.length == 2) {
+                    String modName = parts[0].trim();
+                    boolean enabled = Boolean.parseBoolean(parts[1].trim());
+                    modStates.put(modName, enabled);
+                }
             }
+        } catch (IOException e) {
+            System.out.println("Failed to load config file.");
+            e.printStackTrace();
         }
     }
 
     public static void saveConfig() {
-        try {
+        if (configFile == null) {
+            System.out.println("Config file is null, cannot save.");
+            return;
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(configFile))) {
             for (Map.Entry<String, Boolean> entry : modStates.entrySet()) {
-                config.get("modSettings", entry.getKey(), false).set(entry.getValue());
+                writer.write(entry.getKey() + "=" + entry.getValue());
+                writer.newLine();
             }
-            if (config.hasChanged()) {
-                config.save();
-            }
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Failed to save config file.");
+            e.printStackTrace();
         }
     }
 
