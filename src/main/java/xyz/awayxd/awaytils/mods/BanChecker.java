@@ -5,9 +5,11 @@ import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import xyz.awayxd.awaytils.commands.ModManager;
+
+//import xyz.awayxd.awaytils.commands.ModManager;
 import xyz.awayxd.awaytils.utils.HttpUtils;
 import xyz.awayxd.awaytils.utils.MSTimer;
+import xyz.awayxd.awaytils.utils.ChatUtils;
 
 public class BanChecker  {
 
@@ -50,9 +52,9 @@ public class BanChecker  {
 
                             if (isActive() && Minecraft.getMinecraft().thePlayer != null && isOnHypixel()) {
                                 if (STAFF_BAN_LAST_MIN > 0) {
-                                    sendMessageToChat(EnumChatFormatting.DARK_GRAY + "[" + EnumChatFormatting.LIGHT_PURPLE + "AwayTils" + EnumChatFormatting.DARK_GRAY + "] " + EnumChatFormatting.RED + "Staff have banned " + EnumChatFormatting.DARK_RED + STAFF_BAN_LAST_MIN + EnumChatFormatting.RED + " players in the last minute!");
+                                    sendMessageToChat(ChatUtils.getTagAwayTils() + EnumChatFormatting.RED + "Staff have banned " + EnumChatFormatting.DARK_RED + STAFF_BAN_LAST_MIN + EnumChatFormatting.RED + " players in the last minute!");
                                 } else {
-                                    sendMessageToChat(EnumChatFormatting.DARK_GRAY + "[" + EnumChatFormatting.LIGHT_PURPLE + "AwayTils" + EnumChatFormatting.DARK_GRAY + "] " + EnumChatFormatting.RED + "No players were banned by staff in the last minute.");
+                                    sendMessageToChat(ChatUtils.getTagAwayTils() + EnumChatFormatting.RED + "No players were banned by staff in the last minute.");
                                 }
                             }
                         }
