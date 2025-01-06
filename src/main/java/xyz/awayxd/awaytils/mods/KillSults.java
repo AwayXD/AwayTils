@@ -7,6 +7,7 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import xyz.awayxd.awaytils.commands.ModManager;
+import xyz.awayxd.awaytils.utils.ChatUtils;
 
 import java.util.Random;
 
@@ -18,7 +19,7 @@ public class KillSults implements ModManager.ModLifecycle {
     public void onClientChatReceived(ClientChatReceivedEvent event) {
         IChatComponent message = event.message;
         if (message != null) {
-            String cleanMessage = message.getUnformattedText().replaceAll("§.", "");
+            String cleanMessage = ChatUtils.getHypixelMessage(event.message);
 
             String playerName = mc.thePlayer.getName().toLowerCase();
             if (shouldProcessKillMessage(cleanMessage, playerName)) {

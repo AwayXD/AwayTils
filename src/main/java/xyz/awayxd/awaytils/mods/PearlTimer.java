@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import xyz.awayxd.awaytils.commands.ModManager;
 import xyz.awayxd.awaytils.utils.ChatUtils;
 
-public class PearlCounter implements ModManager.ModLifecycle {
+public class PearlTimer implements ModManager.ModLifecycle {
 
     private final Minecraft mc = Minecraft.getMinecraft();
     private int countdown = -1;

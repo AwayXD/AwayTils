@@ -8,30 +8,31 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.client.ClientCommandHandler;
-import net.minecraftforge.common.MinecraftForge;
 import xyz.awayxd.awaytils.mods.*;
+import xyz.awayxd.awaytils.utils.ChatUtils;
 
 public class ModManager {
 
     private static final Minecraft mc = Minecraft.getMinecraft();
     private static final Map<String, Boolean> modStates = new HashMap<>();
     private static final Map<String, Object> modules = new HashMap<>();
-    private static final File configFile = new File(Minecraft.getMinecraft().mcDataDir, "awaytils_mods.cfg");
+    private static final File configFile = new File(Minecraft.getMinecraft().mcDataDir, "awaytils.cfg");
 
     static {
         modStates.put("AutoPlay", false);
         modules.put("AutoPlay", new AutoPlay());
-        modStates.put("PearlCounter", false);
-        modules.put("PearlCounter", new PearlCounter());
+        modStates.put("PearlTimer", false);
+        modules.put("PearlTimer", new PearlTimer());
         modStates.put("KillSults", false);
         modules.put("KillSults", new KillSults());
+        modStates.put("CorruptGame", false);
+        modules.put("CorruptGame", new CorruptGame());
         loadConfig();
     }
 
     public static void loadConfig() {
         if (!configFile.exists()) {
-            return; // No config file, use default values
+            return;
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(configFile))) {
@@ -72,7 +73,7 @@ public class ModManager {
         if (modStates.containsKey(modName)) {
             boolean newState = !modStates.get(modName);
             modStates.put(modName, newState);
-            saveConfig(); // Save updated states to the config file
+            saveConfig();
             String status = newState ? EnumChatFormatting.GREEN + "Enabled" : EnumChatFormatting.RED + "Disabled";
 
             if (modules.containsKey(modName)) {
@@ -86,9 +87,9 @@ public class ModManager {
                 }
             }
 
-            mc.thePlayer.addChatMessage(new ChatComponentText(modName + " has been " + status + "."));
+            mc.thePlayer.addChatMessage(new ChatComponentText(ChatUtils.getTagAwayTils() + modName + " has been " + status + "."));
         } else {
-            mc.thePlayer.addChatMessage(new ChatComponentText("Mod not found: " + modName));
+            mc.thePlayer.addChatMessage(new ChatComponentText(ChatUtils.getTagAwayTils() + "Mod not found: " + modName));
         }
     }
 
@@ -107,18 +108,31 @@ public class ModManager {
 
         @Override
         public String getCommandUsage(ICommandSender sender) {
-            return "/utils [mod]";
+            return "/utils [mod|reload]";
         }
 
         @Override
         public void processCommand(ICommandSender sender, String[] args) {
             if (args.length == 0) {
                 mc.thePlayer.addChatMessage(new ChatComponentText("-------------------"));
-                StringBuilder modList = new StringBuilder(EnumChatFormatting.LIGHT_PURPLE + "Away's Utils" + EnumChatFormatting.WHITE + " :\n");
+                StringBuilder modList = new StringBuilder(ChatUtils.getTagAwayTils() + EnumChatFormatting.WHITE + ":\n");
                 modStates.forEach((mod, enabled) -> modList.append(mod)
                         .append(enabled ? EnumChatFormatting.GREEN + " [Enabled]" : EnumChatFormatting.RED + " [Disabled]").append("\n"));
                 mc.thePlayer.addChatMessage(new ChatComponentText(modList.toString()));
                 mc.thePlayer.addChatMessage(new ChatComponentText("-------------------"));
+            } else if (args[0].equalsIgnoreCase("reload")) {
+                loadConfig();
+                modules.values().forEach(module -> {
+                    if (module instanceof ModLifecycle) {
+                        ((ModLifecycle) module).onDisable();
+                    }
+                });
+                modStates.forEach((mod, enabled) -> {
+                    if (enabled && modules.get(mod) instanceof ModLifecycle) {
+                        ((ModLifecycle) modules.get(mod)).onEnable();
+                    }
+                });
+                mc.thePlayer.addChatMessage(new ChatComponentText(ChatUtils.getTagAwayTils() + "Mods and configuration reloaded."));
             } else {
                 String modName = args[0];
                 toggleMod(modName);

@@ -90,6 +90,6 @@ public class BanChecker  {
 
 
     public boolean isActive() {
-        return true; // Replace with actual logic for determining if the mod is active
+        return true;
     }
 }

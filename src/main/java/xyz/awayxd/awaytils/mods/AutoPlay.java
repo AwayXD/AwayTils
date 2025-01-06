@@ -59,8 +59,12 @@ public class AutoPlay implements ModManager.ModLifecycle {
             mc.fontRendererObj.drawStringWithShadow(text, width / 2 - mc.fontRendererObj.getStringWidth(text) / 2, yOffset, 0xFFFFFF);
 
         } else if (countdown == 0) {
-            mc.thePlayer.sendChatMessage("/play solo_normal");
+            ChatUtils.sendCommand("play solo_normal");
             countdown = -1;
+
+
+
         }
     }
 }
+
