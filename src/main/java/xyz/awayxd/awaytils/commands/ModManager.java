@@ -1,11 +1,6 @@
 package xyz.awayxd.awaytils.commands;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.client.Minecraft;
@@ -22,7 +17,7 @@ public class ModManager {
     private static final Minecraft mc = Minecraft.getMinecraft();
     private static final Map<String, Boolean> modStates = new HashMap<>();
     private static final Map<String, Object> modules = new HashMap<>();
-    private static File configFile;
+    private static final File configFile = new File(Minecraft.getMinecraft().mcDataDir, "awaytils_mods.cfg");
 
     static {
         modStates.put("AutoPlay", false);
@@ -31,44 +26,13 @@ public class ModManager {
         modules.put("SkywarsCounter", new SkywarsCounter());
         modStates.put("KillSults", false);
         modules.put("KillSults", new KillSults());
-    }
-
-    public static void initialize() {
-        File configDir = new File(mc.mcDataDir, "config/awaytils_config");
-        if (!configDir.exists()) {
-            if (configDir.mkdirs()) {
-                System.out.println("Created config directory at: " + configDir.getAbsolutePath());
-            } else {
-                System.out.println("Failed to create config directory at: " + configDir.getAbsolutePath());
-            }
-        } else {
-            System.out.println("Config directory already exists at: " + configDir.getAbsolutePath());
-        }
-
-        configFile = new File(configDir, "awaytils_settings.txt");
-        System.out.println("Config file path: " + configFile.getAbsolutePath());
-
-        if (!configFile.exists()) {
-            try {
-                if (configFile.createNewFile()) {
-                    System.out.println("Created config file at: " + configFile.getAbsolutePath());
-                } else {
-                    System.out.println("Config file already exists at: " + configFile.getAbsolutePath());
-                }
-            } catch (IOException e) {
-                System.out.println("Failed to create config file at: " + configFile.getAbsolutePath());
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("Config file already exists at: " + configFile.getAbsolutePath());
-        }
 
         loadConfig();
     }
 
     public static void loadConfig() {
-        if (configFile == null || !configFile.exists()) {
-            return;  // No config file, use default values
+        if (!configFile.exists()) {
+            return; // No config file, use default values
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(configFile))) {
@@ -89,12 +53,7 @@ public class ModManager {
         }
     }
 
-    public static void saveConfig() {
-        if (configFile == null) {
-            System.out.println("Config file is null, cannot save.");
-            return;
-        }
-
+    private static void saveConfig() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(configFile))) {
             for (Map.Entry<String, Boolean> entry : modStates.entrySet()) {
                 writer.write(entry.getKey() + "=" + entry.getValue());
@@ -114,6 +73,7 @@ public class ModManager {
         if (modStates.containsKey(modName)) {
             boolean newState = !modStates.get(modName);
             modStates.put(modName, newState);
+            saveConfig(); // Save updated states to the config file
             String status = newState ? EnumChatFormatting.GREEN + "Enabled" : EnumChatFormatting.RED + "Disabled";
 
             if (modules.containsKey(modName)) {
@@ -128,7 +88,6 @@ public class ModManager {
             }
 
             mc.thePlayer.addChatMessage(new ChatComponentText(modName + " has been " + status + "."));
-            saveConfig();  // Save the settings after toggling
         } else {
             mc.thePlayer.addChatMessage(new ChatComponentText("Mod not found: " + modName));
         }
