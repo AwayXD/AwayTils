@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import xyz.awayxd.awaytils.commands.ModManager;
 import xyz.awayxd.awaytils.mods.AutoPlay;
+import xyz.awayxd.awaytils.mods.BanChecker;
 import xyz.awayxd.awaytils.mods.KillSults;
 import xyz.awayxd.awaytils.mods.SkywarsCounter;
 
@@ -22,6 +23,9 @@ public class AwayTils
 
 
         MinecraftForge.EVENT_BUS.register(new ModManager());
+        MinecraftForge.EVENT_BUS.register(new BanChecker()); // broken in modmanager so putting it here - Away
+
+
 
 
 

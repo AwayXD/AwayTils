@@ -26,9 +26,6 @@ public class ModManager {
         modules.put("SkywarsCounter", new SkywarsCounter());
         modStates.put("KillSults", false);
         modules.put("KillSults", new KillSults());
-        modStates.put("BanTracker", false);
-        modules.put("BanTracker", new BanTracker());
-
         loadConfig();
     }
 

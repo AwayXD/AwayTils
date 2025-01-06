@@ -5,12 +5,11 @@ import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.common.MinecraftForge;
 import xyz.awayxd.awaytils.commands.ModManager;
 import xyz.awayxd.awaytils.utils.HttpUtils;
 import xyz.awayxd.awaytils.utils.MSTimer;
 
-public class BanTracker implements ModManager.ModLifecycle {
+public class BanChecker  {
 
     private static final String API_PUNISHMENT = decodeHex("68747470733a2f2f6170692e706c616e636b652e696f2f6879706978656c2f76312f70756e6973686d656e745374617473");
     public static int WATCHDOG_BAN_LAST_MIN = 0;
@@ -18,7 +17,7 @@ public class BanTracker implements ModManager.ModLifecycle {
     public static int STAFF_BAN_LAST_MIN = 0;
     private String checkTag = "Idle...";
 
-    public BanTracker() {
+    public BanChecker() {
         new Thread("Hypixel-BanChecker") {
             @Override
             public void run() {
@@ -53,7 +52,7 @@ public class BanTracker implements ModManager.ModLifecycle {
                                 if (STAFF_BAN_LAST_MIN > 0) {
                                     sendMessageToChat(EnumChatFormatting.DARK_GRAY + "[" + EnumChatFormatting.LIGHT_PURPLE + "AwayTils" + EnumChatFormatting.DARK_GRAY + "] " + EnumChatFormatting.RED + "Staff have banned " + EnumChatFormatting.DARK_RED + STAFF_BAN_LAST_MIN + EnumChatFormatting.RED + " players in the last minute!");
                                 } else {
-                                    sendMessageToChat(EnumChatFormatting.DARK_GRAY + "[" + EnumChatFormatting.DARK_PURPLE + "P" + EnumChatFormatting.DARK_GRAY + "] " + EnumChatFormatting.RED + "No players were banned by staff in the last minute.");
+                                    sendMessageToChat(EnumChatFormatting.DARK_GRAY + "[" + EnumChatFormatting.LIGHT_PURPLE + "AwayTils" + EnumChatFormatting.DARK_GRAY + "] " + EnumChatFormatting.RED + "No players were banned by staff in the last minute.");
                                 }
                             }
                         }
@@ -87,23 +86,8 @@ public class BanTracker implements ModManager.ModLifecycle {
         return result.toString();
     }
 
-    @Override
-    public String getTag() {
-        return checkTag;
-    }
-
-    @Override
-    public void onEnable() {
-        MinecraftForge.EVENT_BUS.register(this);
-
-    }
-
-    @Override
-    public void onDisable() {
-        MinecraftForge.EVENT_BUS.unregister(this);
-    }
 
     public boolean isActive() {
-        return true;
+        return true; // Replace with actual logic for determining if the mod is active
     }
 }
