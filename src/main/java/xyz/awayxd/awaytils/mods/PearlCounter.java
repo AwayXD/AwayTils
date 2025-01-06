@@ -5,7 +5,6 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -16,7 +15,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import xyz.awayxd.awaytils.commands.ModManager;
 import xyz.awayxd.awaytils.utils.ChatUtils;
 
-public class SkywarsCounter implements ModManager.ModLifecycle {
+public class PearlCounter implements ModManager.ModLifecycle {
 
     private final Minecraft mc = Minecraft.getMinecraft();
     private int countdown = -1;

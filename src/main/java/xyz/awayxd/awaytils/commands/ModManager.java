@@ -22,8 +22,8 @@ public class ModManager {
     static {
         modStates.put("AutoPlay", false);
         modules.put("AutoPlay", new AutoPlay());
-        modStates.put("SkywarsCounter", false);
-        modules.put("SkywarsCounter", new SkywarsCounter());
+        modStates.put("PearlCounter", false);
+        modules.put("PearlCounter", new PearlCounter());
         modStates.put("KillSults", false);
         modules.put("KillSults", new KillSults());
         loadConfig();

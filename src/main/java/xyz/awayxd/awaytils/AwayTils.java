@@ -9,7 +9,6 @@ import xyz.awayxd.awaytils.commands.ModManager;
 import xyz.awayxd.awaytils.mods.AutoPlay;
 import xyz.awayxd.awaytils.mods.BanChecker;
 import xyz.awayxd.awaytils.mods.KillSults;
-import xyz.awayxd.awaytils.mods.SkywarsCounter;
 
 @Mod(modid = AwayTils.MODID, version = AwayTils.VERSION)
 public class AwayTils
