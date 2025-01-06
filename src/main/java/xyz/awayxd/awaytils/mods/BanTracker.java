@@ -51,7 +51,7 @@ public class BanTracker implements ModManager.ModLifecycle {
 
                             if (isActive() && Minecraft.getMinecraft().thePlayer != null && isOnHypixel()) {
                                 if (STAFF_BAN_LAST_MIN > 0) {
-                                    sendMessageToChat(EnumChatFormatting.DARK_GRAY + "[" + EnumChatFormatting.DARK_PURPLE + "P" + EnumChatFormatting.DARK_GRAY + "] " + EnumChatFormatting.RED + "Staff have banned " + EnumChatFormatting.DARK_RED + STAFF_BAN_LAST_MIN + EnumChatFormatting.RED + " players in the last minute!");
+                                    sendMessageToChat(EnumChatFormatting.DARK_GRAY + "[" + EnumChatFormatting.LIGHT_PURPLE + "AwayTils" + EnumChatFormatting.DARK_GRAY + "] " + EnumChatFormatting.RED + "Staff have banned " + EnumChatFormatting.DARK_RED + STAFF_BAN_LAST_MIN + EnumChatFormatting.RED + " players in the last minute!");
                                 } else {
                                     sendMessageToChat(EnumChatFormatting.DARK_GRAY + "[" + EnumChatFormatting.DARK_PURPLE + "P" + EnumChatFormatting.DARK_GRAY + "] " + EnumChatFormatting.RED + "No players were banned by staff in the last minute.");
                                 }
