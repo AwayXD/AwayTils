@@ -2,14 +2,13 @@ package xyz.awayxd.awaytils.mods;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import xyz.awayxd.awaytils.commands.ModManager;
+import xyz.awayxd.awaytils.utils.ChatUtils;
 
 public class AutoPlay implements ModManager.ModLifecycle {
 
@@ -32,18 +31,14 @@ public class AutoPlay implements ModManager.ModLifecycle {
         MinecraftForge.EVENT_BUS.unregister(this);
     }
 
-
     @SubscribeEvent
     public void onChatReceived(ClientChatReceivedEvent event) {
-        IChatComponent message = event.message;
-        if (message != null) {
-            String cleanMessage = message.getUnformattedText().replaceAll("§.", "");
-            if (cleanMessage.toLowerCase().contains("you won! want to play again? click here!") ||
-                    cleanMessage.toLowerCase().contains("you died! want to play again? click here!")) {
+        String cleanMessage = ChatUtils.getHypixelMessage(event.message);
+        if (cleanMessage != null && (cleanMessage.toLowerCase().contains("you won! want to play again? click here!") ||
+                cleanMessage.toLowerCase().contains("you died! want to play again? click here!"))) {
 
-                countdown = 3;
-                lastTime = System.currentTimeMillis();
-            }
+            countdown = 3;
+            lastTime = System.currentTimeMillis();
         }
     }
 
