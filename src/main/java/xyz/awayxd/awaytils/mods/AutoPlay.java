@@ -18,6 +18,11 @@ public class AutoPlay implements ModManager.ModLifecycle {
     private Minecraft mc = Minecraft.getMinecraft();
 
     @Override
+    public String getTag() {
+        return null;
+    }
+
+    @Override
     public void onEnable() {
         MinecraftForge.EVENT_BUS.register(this);
     }

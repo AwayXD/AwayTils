@@ -111,6 +111,11 @@ public class KillSults implements ModManager.ModLifecycle {
     }
 
     @Override
+    public String getTag() {
+        return null;
+    }
+
+    @Override
     public void onEnable() {
         MinecraftForge.EVENT_BUS.register(this);
     }
