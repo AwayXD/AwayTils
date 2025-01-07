@@ -132,7 +132,7 @@ public class ModManager {
                         ((ModLifecycle) modules.get(mod)).onEnable();
                     }
                 });
-                mc.thePlayer.addChatMessage(new ChatComponentText(ChatUtils.getTagAwayTils() + "Mods and configuration reloaded."));
+                mc.thePlayer.addChatMessage(new ChatComponentText(ChatUtils.getTagAwayTils() + EnumChatFormatting.GREEN + "Mods and configuration reloaded."));
             } else {
                 String modName = args[0];
                 toggleMod(modName);
