@@ -8,8 +8,10 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import xyz.awayxd.awaytils.gui.ModManagerScreen;
 import xyz.awayxd.awaytils.mods.*;
 import xyz.awayxd.awaytils.utils.ChatUtils;
+import xyz.awayxd.awaytils.utils.DelayedTask;
 
 public class ModManager {
 
@@ -93,6 +95,10 @@ public class ModManager {
         }
     }
 
+    public static Map<String, Boolean> getModStates() {
+        return modStates;
+    }
+
     public interface ModLifecycle {
         String getTag();
 
@@ -108,7 +114,7 @@ public class ModManager {
 
         @Override
         public String getCommandUsage(ICommandSender sender) {
-            return "/utils [mod|reload]";
+            return "/utils [mod|reload|gui]";
         }
 
         @Override
@@ -133,6 +139,8 @@ public class ModManager {
                     }
                 });
                 mc.thePlayer.addChatMessage(new ChatComponentText(ChatUtils.getTagAwayTils() + EnumChatFormatting.GREEN + "Mods and configuration reloaded."));
+            } else if (args[0].equalsIgnoreCase("gui")) {
+                new DelayedTask(() -> mc.displayGuiScreen(new ModManagerScreen()));
             } else {
                 String modName = args[0];
                 toggleMod(modName);
