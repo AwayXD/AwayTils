@@ -8,6 +8,7 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+
 import xyz.awayxd.awaytils.gui.ModManagerScreen;
 import xyz.awayxd.awaytils.mods.*;
 import xyz.awayxd.awaytils.utils.ChatUtils;
@@ -29,6 +30,8 @@ public class ModManager {
         modules.put("KillSults", new KillSults());
         modStates.put("CorruptGame", false);
         modules.put("CorruptGame", new CorruptGame());
+//        modStates.put("AutoFriend", false);
+//        modules.put("AutoFriend", new AutoFriend());
         loadConfig();
     }
 
@@ -133,6 +136,7 @@ public class ModManager {
                         ((ModLifecycle) module).onDisable();
                     }
                 });
+
                 modStates.forEach((mod, enabled) -> {
                     if (enabled && modules.get(mod) instanceof ModLifecycle) {
                         ((ModLifecycle) modules.get(mod)).onEnable();

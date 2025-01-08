@@ -3,6 +3,7 @@ package xyz.awayxd.awaytils.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.EnumChatFormatting;
 import xyz.awayxd.awaytils.commands.ModManager;
 import xyz.awayxd.awaytils.utils.ChatUtils;
 
@@ -20,7 +21,7 @@ public class ModManagerScreen extends GuiScreen {
 
         for (String modName : ModManager.getModStates().keySet()) {
             boolean enabled = ModManager.isModEnabled(modName);
-            this.buttonList.add(new GuiButton(buttonId++, this.width / 2 - 100, y, 200, 20, modName + (enabled ? " [Enabled]" : " [Disabled]")));
+            this.buttonList.add(new GuiButton(buttonId++, this.width / 2 - 100, y, 200, 20, modName + " :" + (enabled ? EnumChatFormatting.GREEN + " Enabled" : EnumChatFormatting.RED + " Disabled")));
             y += 24;
         }
 
@@ -33,7 +34,7 @@ public class ModManagerScreen extends GuiScreen {
         if (button.id < ModManager.getModStates().size()) {
             String modName = (String) ModManager.getModStates().keySet().toArray()[button.id];
             ModManager.toggleMod(modName);
-            button.displayString = modName + (ModManager.isModEnabled(modName) ? " [Enabled]" : " [Disabled]");
+            button.displayString = modName + (ModManager.isModEnabled(modName) ? EnumChatFormatting.GREEN + " Enabled" : EnumChatFormatting.RED + " Disabled");
         } else if (button.id == buttonList.size() - 1) {
             mc.displayGuiScreen(null);
         }
