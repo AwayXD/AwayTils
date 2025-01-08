@@ -36,6 +36,8 @@ public class AutoPlay implements ModManager.ModLifecycle {
         String cleanMessage = ChatUtils.getHypixelMessage(event.message);
         if (cleanMessage != null && (cleanMessage.toLowerCase().contains("you won! want to play again? click here!") ||
                 cleanMessage.toLowerCase().contains("you died! want to play again? click here!"))) {
+            ChatUtils.sendMessage(ChatUtils.getTagAwayTils() + EnumChatFormatting.GREEN + "Sending you to a new game!");
+
 
             countdown = 3;
             lastTime = System.currentTimeMillis();
@@ -61,6 +63,8 @@ public class AutoPlay implements ModManager.ModLifecycle {
         } else if (countdown == 0) {
             ChatUtils.sendCommand("play solo_normal");
             countdown = -1;
+
+
 
 
 
