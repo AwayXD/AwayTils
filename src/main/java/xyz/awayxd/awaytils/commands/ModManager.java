@@ -30,6 +30,8 @@ public class ModManager {
         modules.put("KillSults", new KillSults());
         modStates.put("CorruptGame", false);
         modules.put("CorruptGame", new CorruptGame());
+        modStates.put("BackStab", false);
+        modules.put("BackStab", new BackStab());
 //        modStates.put("AutoFriend", false);
 //        modules.put("AutoFriend", new AutoFriend());
         loadConfig();
