@@ -23,12 +23,5 @@ public class AwayTils
 
         MinecraftForge.EVENT_BUS.register(new ModManager());
         MinecraftForge.EVENT_BUS.register(new BanChecker()); // broken in modmanager so putting it here - Away
-
-
-
-
-
-
-
     }
 }
