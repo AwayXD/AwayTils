@@ -19,6 +19,7 @@ public class AwayTils
     @EventHandler
     public void init(FMLInitializationEvent event)  {
         ClientCommandHandler.instance.registerCommand(new ModManager.UtilsCommand());
+        ClientCommandHandler.instance.registerCommand(new AutoPlay.AutoPlayCommand());
 
 
         MinecraftForge.EVENT_BUS.register(new ModManager());
