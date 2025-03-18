@@ -23,7 +23,11 @@ public class ChatUtils {
             mc.thePlayer.sendChatMessage("/" + command);
         }
     }
-
+    public static void sendPlayerMessage(String message) {
+        if (mc.thePlayer != null && message != null && !message.isEmpty()) {
+            mc.thePlayer.sendChatMessage(message);
+        }
+    }
 
     public static String getHypixelMessage(IChatComponent chatComponent) {
         if (chatComponent == null) {

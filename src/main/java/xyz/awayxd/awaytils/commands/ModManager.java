@@ -32,6 +32,8 @@ public class ModManager {
         modules.put("CorruptGame", new CorruptGame());
        modStates.put("KillEffects", false);
         modules.put("KillEffects", new KillEffects());
+        modules.put("AutoList", new AutoList());
+        modStates.put("AutoList", false);
         loadConfig();
     }
 
