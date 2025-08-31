@@ -34,7 +34,6 @@ public class FakeBan implements ModManager.ModLifecycle {
             String cleanMessage = ChatUtils.getHypixelMessage(event.message);
 
             if (cleanMessage != null && cleanMessage.toLowerCase().contains(".ban")) {
-                // Prevent the original .ban message from showing
                 event.setCanceled(true);
 
                 ChatUtils.sendMessage(
