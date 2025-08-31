@@ -34,8 +34,11 @@ public class ModManager {
         modules.put("KillEffects", new KillEffects());
         modules.put("AutoList", new AutoList());
         modStates.put("AutoList", false);
+        modules.put("FakeBan", new FakeBan());
+        modStates.put("FakeBan", false);
         loadConfig();
     }
+
 
     public static void loadConfig() {
         if (!configFile.exists()) {
