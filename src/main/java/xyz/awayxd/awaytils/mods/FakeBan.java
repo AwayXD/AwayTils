@@ -37,11 +37,11 @@ public class FakeBan implements ModManager.ModLifecycle {
                 event.setCanceled(true);
 
                 ChatUtils.sendMessage(
-                        EnumChatFormatting.RED.toString() + EnumChatFormatting.BOLD.toString() +
+                        EnumChatFormatting.RED.toString() +
                                 "A player has been removed from your game."
                 );
                 ChatUtils.sendMessage(
-                        EnumChatFormatting.AQUA.toString() + EnumChatFormatting.BOLD.toString() +
+                        EnumChatFormatting.AQUA.toString() +
                                 "Use /report to continue helping out the server!"
                 );
             }
